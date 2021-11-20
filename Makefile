@@ -9,3 +9,6 @@ run:
 ## Stop docker container
 stop: 
 	docker-compose down -v
+
+rebuild:
+	docker-compose down -v && docker-compose build && docker-compose up -d
