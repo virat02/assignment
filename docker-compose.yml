@@ -6,26 +6,6 @@ services:
         - 6379
       container_name: redis-container
     
-    # python_app:
-      # build:
-      #   context: .
-      #   dockerfile: Dockerfile
-      # links:
-      #   - redis:redis
-      # depends_on:
-      #   - redis
-      # ports:
-      #   - 5000
-      # volumes:
-      #   - type: bind
-      #     source: ./main.py
-      #     target: /usr/app/src/assignment/main.py
-      # volumes:
-      #   - type: bind
-      #     source: ./redisclient/redis_client.py
-      #     target: /usr/app/src/assignment/redisclient/redis_client.py
-      # container_name: python-container
-    
     web:
       build: .
       ports:
