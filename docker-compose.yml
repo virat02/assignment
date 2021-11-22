@@ -3,15 +3,20 @@ services:
     redis:
       image: redis:latest
       ports:
+        # TODO: Parse env var and extract out port from it
         - 6379
       container_name: redis-container
     
     web:
       build: .
       environment: 
-        PORT: 5000
-        HOST: 0.0.0.0
+        FLASK_PORT: 5000
+        FLASK_HOST: 0.0.0.0
         FLASK_DEBUG: 1
+        PYTHONUNBUFFERED: 1
+        CACHE_GLOBAL_EXPIRY: ${CACHE_GLOBAL_EXPIRY}
+        CACHE_CAPACITY: ${CACHE_CAPACITY}
+        BACKING_REDIS_ADDRESS: ${BACKING_REDIS_ADDRESS}
       ports:
         - "8080:5000"
       container_name: flask-container

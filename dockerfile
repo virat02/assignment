@@ -16,6 +16,6 @@ RUN pip3 install -r requirements.txt
 # Add remote file to root directory in container
 COPY ./app /usr/assignment/app/
 
-CMD [ "python3", "-m", "routes"]
+CMD [ "python3", "-u", "routes.py"]
 
 EXPOSE 5000
