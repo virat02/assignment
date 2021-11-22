@@ -18,7 +18,7 @@ class RedisClient:
                 f'Error: {e}'
             )
     
-    def setKeyVal(self, key, val):
+    def put(self, key, val):
         try:
             self._redis.set(key, val)
         except e:

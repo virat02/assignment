@@ -7,17 +7,15 @@ FROM python:latest
 # ENV CACHE_CAPACITY=
 # ENV IP_ADDRESS=
 # ENV PORT=
-ENV FLASK_APP=routes.py
-ENV FLASK_RUN_HOST=0.0.0.0
 
-WORKDIR /usr/app/src/assignment
+WORKDIR /usr/assignment/app/
 
-COPY ./requirements.txt /usr/app/src/assignment/requirements.txt
-RUN pip install -r requirements.txt
+COPY requirements.txt /usr/assignment/app/requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Add remote file to root directory in container
-COPY . /usr/app/src/assignment
+COPY ./app /usr/assignment/app/
 
-CMD [ "python3", "-m", "flask", "run"]
+CMD [ "python3", "-m", "routes"]
 
 EXPOSE 5000
