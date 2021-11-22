@@ -1,5 +1,5 @@
 from flask import Flask
-from redisclient.redis_client import RedisClient
+from redis.client import RedisClient
 
 # Initialize RedisClient
 redisClient = RedisClient()
