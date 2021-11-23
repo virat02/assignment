@@ -13,15 +13,13 @@ proxy.put('test2', 'test2')
 proxy.put('test3', 'test3')
 proxy.put('test4', 'test4')
 
-app = Flask(__name__)
+proxy_app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return 'Hello'
+@proxy_app.route('/')
+def healthCheck():
+    return 'Proxy service up and running...'
 
-@app.route('/get/<key>')
+@proxy_app.route('/get/<key>')
 def get(key):
     return proxy.get(key)
 
-if __name__ == '__main__':
-    app.run(host=os.getenv('FLASK_HOST'), port=os.getenv('FLASK_PORT'))
