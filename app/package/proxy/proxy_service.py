@@ -22,9 +22,12 @@ class Proxy:
             return val
         else:
             val = self._redisClient.getVal(key)
-            if val:
+
+            if val != -1:
                 print(f'Added {key} to cache')
                 self._cache.put(key, val) 
+            else:
+                print('Key not found in redis either')
 
             print('got from redis')
             return val

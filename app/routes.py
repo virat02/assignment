@@ -21,5 +21,6 @@ def healthCheck():
 
 @proxy_app.route('/get/<key>')
 def get(key):
-    return proxy.get(key)
+    val = proxy.get(key)
+    return val if val != -1 else f'{key} not found!'
 

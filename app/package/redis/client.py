@@ -11,7 +11,7 @@ class RedisClient:
     def getVal(self, key):
         try:
             val = self._redis.get(key)
-            return val if val else f'Key: {key} not found!'
+            return val if val else -1
         except e:
             return (
                 f'Error getting Key: {key}.\n' 
