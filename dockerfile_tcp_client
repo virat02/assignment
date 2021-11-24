@@ -1,0 +1,12 @@
+FROM python:latest
+
+# Environment variables
+
+WORKDIR /usr/app/src/assignment
+
+# Add remote file to root directory in container
+COPY . /usr/app/src/assignment
+
+CMD [ "python3", "-u", "tcp_client.py"]
+
+EXPOSE 8081

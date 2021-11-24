@@ -12,3 +12,12 @@ stop:
 
 rebuild:
 	docker-compose down -v && docker-compose build && docker-compose up -d
+
+run_tcp:
+	docker-compose up -d redis && docker-compose up -d tcp_client
+
+run_http:
+	docker-compose up -d redis && docker-compose up -d web
+
+remove_orphans:
+	docker-compose down --remove-orphans

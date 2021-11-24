@@ -1,5 +1,4 @@
-import os
-from flask import Flask, request
+from flask import Flask
 from package.proxy.proxy_service import Proxy
 
 # Initialize Proxy

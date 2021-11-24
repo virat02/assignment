@@ -8,7 +8,9 @@ services:
       container_name: redis-container
     
     web:
-      build: .
+      build:
+        context: .
+        dockerfile: dockerfile
       environment: 
         PROXY_ADDRESS: ${PROXY_ADDRESS}
         FLASK_DEBUG: 1
@@ -21,3 +23,15 @@ services:
       ports:
         - "8080:5000"
       container_name: flask-container
+
+    tcp_client:
+      build:
+        context: .
+        dockerfile: dockerfile_tcp_client
+      environment:
+        PYTHONUNBUFFERED: 1
+        PROXY_ADDRESS: ${PROXY_ADDRESS}
+        BACKING_REDIS_ADDRESS: ${BACKING_REDIS_ADDRESS}
+      ports:
+        - "8081:6000"
+      container_name: tcp-client-container

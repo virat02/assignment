@@ -12,17 +12,11 @@ class RedisClient:
         try:
             val = self._redis.get(key)
             return val if val else -1
-        except e:
-            return (
-                f'Error getting Key: {key}.\n' 
-                f'Error: {e}'
-            )
+        except:
+            return f'Error getting Key: {key}.\n'
     
     def put(self, key, val):
         try:
             self._redis.set(key, val)
-        except e:
-            return (
-                f'Error setting key: {key} with val: {val}.\n'
-                f'Error: {e}'
-            )
+        except:
+            return f'Error setting key: {key} with val: {val}.\n'
