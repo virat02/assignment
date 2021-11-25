@@ -24,6 +24,9 @@ class Proxy:
         if self._is_tcp:
             key = self._resp_parser.decode(key)
             print(f'Decoded key: {key}')
+
+            if key == 'Invalid':
+                return 'Invalid key requested'
         
         val = self._cache.get(key)
 

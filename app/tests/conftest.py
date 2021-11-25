@@ -10,7 +10,7 @@ def create_app():
 def client(create_app):
     return proxy_app.test_client()
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="session", autouse=True)
 def setup_test_data():
     host = os.getenv('BACKING_REDIS_HOST')
     port = os.getenv('BACKING_REDIS_PORT')

@@ -22,16 +22,19 @@ class RespParser:
         if index == -1:
             index = len(data)
         term = data[processed]
-        if term == "*":
-            return self._parse_multi_chunked(data)
-        elif term == "$":
-            return self._parse_chunked(data)
-        elif term == "+":
-            return self._parse_status(data)
-        elif term == "-":
-            return self._parse_error(data)
-        elif term == ":":
-            return self._parse_integer(data)
+        try:
+            if term == "*":
+                return self._parse_multi_chunked(data)
+            elif term == "$":
+                return self._parse_chunked(data)
+            elif term == "+":
+                return self._parse_status(data)
+            elif term == "-":
+                return self._parse_error(data)
+            elif term == ":":
+                return self._parse_integer(data)
+        except:
+            return 'Invalid'
 
 
     def _parse_stream(self, data):

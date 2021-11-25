@@ -19,7 +19,7 @@ def create_socket():
     s.connect((host, int(port)))
     return s
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="session", autouse=True)
 def setup_test_data():
     host = os.getenv('BACKING_REDIS_HOST')
     port = os.getenv('BACKING_REDIS_PORT')
