@@ -4,6 +4,10 @@ services:
       image: redis:latest
       container_name: redis-container
 
+    redis2:
+      image: redis:latest
+      container_name: redis2-container
+
     web:
       build:
         context: .
@@ -15,7 +19,7 @@ services:
         PYTHONUNBUFFERED: 1
         CACHE_GLOBAL_EXPIRY: ${CACHE_GLOBAL_EXPIRY}
         CACHE_CAPACITY: ${CACHE_CAPACITY}
-        BACKING_REDIS_HOST: ${BACKING_REDIS_HOST}
+        BACKING_REDIS_HOST: ${BACKING_REDIS_HOST_HTTP}
         BACKING_REDIS_PORT: ${BACKING_REDIS_PORT}
         MAX_CLIENTS: ${MAX_CLIENTS}
         MAX_REQUESTS: ${MAX_REQUESTS}
@@ -35,7 +39,7 @@ services:
         PYTHONUNBUFFERED: 1
         CACHE_GLOBAL_EXPIRY: ${CACHE_GLOBAL_EXPIRY}
         CACHE_CAPACITY: ${CACHE_CAPACITY}
-        BACKING_REDIS_HOST: ${BACKING_REDIS_HOST}
+        BACKING_REDIS_HOST: ${BACKING_REDIS_HOST_TCP}
         BACKING_REDIS_PORT: ${BACKING_REDIS_PORT}
         MAX_CLIENTS: ${MAX_CLIENTS}
         MAX_REQUESTS: ${MAX_REQUESTS}

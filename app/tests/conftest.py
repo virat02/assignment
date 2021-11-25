@@ -14,7 +14,7 @@ def client(create_app):
 def setup_test_data():
     host = os.getenv('BACKING_REDIS_HOST')
     port = os.getenv('BACKING_REDIS_PORT')
-    redisClient = RedisClient(host=host, port=port)
+    redisClient = RedisClient(host=host, port=port, db=0)
 
     redisClient.put('color', 'blue')
     redisClient.put('test', 'test')

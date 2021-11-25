@@ -22,14 +22,6 @@ print('socket is listening')
 # Initialize Proxy
 proxy = Proxy(is_tcp=True)
 
-# set test data for the time being.
-proxy.put("$3\r\nfoo\r\n", "$3\r\nbar\r\n")
-proxy.put("$4\r\nfoo1\r\n", "$4\r\nbar1\r\n")
-proxy.put("$4\r\nfoo2\r\n", "$4\r\nbar2\r\n")
-proxy.put("$4\r\nfoo3\r\n", "$4\r\nbar3\r\n")
-proxy.put("$4\r\nfoo4\r\n", "$4\r\nbar4\r\n")
-proxy.put("$4\r\nfoo5\r\n", "$4\r\nbar5\r\n")
-
 # Establish connection with client.
 while True:
     c, addr = s.accept()	

@@ -10,7 +10,8 @@ class Proxy:
         host = os.getenv('BACKING_REDIS_HOST')
         port = os.getenv('BACKING_REDIS_PORT')
 
-        self._redisClient = RedisClient(host=host, port=port)
+        print(f'Getting redis client from host: {host}, port: {port}')
+        self._redisClient = RedisClient(host=host, port=port, db=0)
 
         # Initialize LRU Cache
         self._cache = LRUCache(os.getenv('CACHE_CAPACITY'), os.getenv('CACHE_GLOBAL_EXPIRY'))

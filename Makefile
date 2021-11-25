@@ -44,7 +44,7 @@ test_http:
 	make run_http && docker-compose exec web pytest "tests"
 
 test_tcp:
-	make run_tcp && docker-compose exec web pytest "tests"
+	make run_tcp && docker-compose exec tcp_server pytest "tests"
 
 stop_redis:
 	docker-compose down -v redis
