@@ -1,0 +1,14 @@
+FROM python:latest
+
+# Environment variables
+ENV PROXY_PORT ${PROXY_PORT_TCP}
+
+WORKDIR /usr/assignment/server
+
+COPY ./server/requirements.txt /usr/assignment/server/requirements.txt
+RUN pip3 install -r requirements.txt
+
+ADD ./server/server.py /usr/assignment/server/
+ADD ./package /usr/assignment/server/package
+
+EXPOSE ${PROXY_PORT}

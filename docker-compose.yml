@@ -2,36 +2,44 @@ version: '3.8'
 services:
     redis:
       image: redis:latest
-      ports:
-        # TODO: Parse env var and extract out port from it
-        - 6379
       container_name: redis-container
-    
+
     web:
       build:
         context: .
-        dockerfile: dockerfile
+        dockerfile: dockerfile_web
       environment: 
-        PROXY_ADDRESS: ${PROXY_ADDRESS}
+        PROXY_HOST: ${PROXY_HOST}
+        PROXY_PORT: ${PROXY_PORT}
         FLASK_DEBUG: 1
         PYTHONUNBUFFERED: 1
         CACHE_GLOBAL_EXPIRY: ${CACHE_GLOBAL_EXPIRY}
         CACHE_CAPACITY: ${CACHE_CAPACITY}
-        BACKING_REDIS_ADDRESS: ${BACKING_REDIS_ADDRESS}
+        BACKING_REDIS_HOST: ${BACKING_REDIS_HOST}
+        BACKING_REDIS_PORT: ${BACKING_REDIS_PORT}
         MAX_CLIENTS: ${MAX_CLIENTS}
         MAX_REQUESTS: ${MAX_REQUESTS}
       ports:
-        - "8080:5000"
+        - "8080:${PROXY_PORT}"
+      restart: always
       container_name: flask-container
-
-    tcp_client:
+    
+    tcp_server:
       build:
         context: .
-        dockerfile: dockerfile_tcp_client
+        dockerfile: dockerfile_tcp_server
+      command: python ./server.py
       environment:
+        PROXY_HOST: ${PROXY_HOST_TCP}
+        PROXY_PORT: ${PROXY_PORT_TCP}
         PYTHONUNBUFFERED: 1
-        PROXY_ADDRESS: ${PROXY_ADDRESS}
-        BACKING_REDIS_ADDRESS: ${BACKING_REDIS_ADDRESS}
+        CACHE_GLOBAL_EXPIRY: ${CACHE_GLOBAL_EXPIRY}
+        CACHE_CAPACITY: ${CACHE_CAPACITY}
+        BACKING_REDIS_HOST: ${BACKING_REDIS_HOST}
+        BACKING_REDIS_PORT: ${BACKING_REDIS_PORT}
+        MAX_CLIENTS: ${MAX_CLIENTS}
+        MAX_REQUESTS: ${MAX_REQUESTS}
       ports:
-        - "8081:6000"
-      container_name: tcp-client-container
+        - "8081:${PROXY_PORT_TCP}"
+      restart: always
+      container_name: tcp-server-container

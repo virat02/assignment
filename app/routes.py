@@ -2,7 +2,7 @@ from flask import Flask
 from package.proxy.proxy_service import Proxy
 
 # Initialize Proxy
-proxy = Proxy()
+proxy = Proxy(is_tcp=False)
 
 # set test data for the time being.
 proxy.put('color', 'blue')

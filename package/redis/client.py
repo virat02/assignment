@@ -1,12 +1,14 @@
-import redis
+from redis import Redis
 
 class RedisClient:
     _redis = None
 
     def __init__(self, host='redis', port=6379, db=0):
         # connect to redis
-        # TODO: Use env configured vars.
-        self._redis = redis.StrictRedis(host=host, port=port, db=db)
+        try:
+            self._redis = Redis(host=host, port=port, db=db, decode_responses=True)
+        except:
+            print(f'Could not connect to redis; host: ${host} on port ${port}')
 
     def getVal(self, key):
         try:

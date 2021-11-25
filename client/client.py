@@ -12,27 +12,27 @@ except socket.error as err:
 port = 6379
 
 try:
-	# TODO: Make it listen to proxy service rather than redis
-	[host, port] = os.getenv('BACKING_REDIS_ADDRESS').split(':')
+	host = "localhost"
+	port = 8081
 except socket.gaierror:
 	print("there was an error resolving the host")
 	sys.exit()
 
+print(f'Connecting to host: {host} on port: {port}')
 # connecting to the server
 s.connect((host, int(port)))
 
 print('the socket has successfully connected')
 
 try:
-    # Send data
-    # message = b'*2\r\n$3\r\nSET\r\n$5\r\ncolor\r\n$3\r\nred\r\n'
-	message = b'*1\r\n$4\r\nPING\r\n'
+	# Send data
+	message = b"$4\r\nfoo6\r\n"
 	print(f'sending: {message}')
 	s.sendall(message)
 	
-	data = s.recv(16)
+	data = s.recv(32)
 	print(f'received: {data}')
-        
+	
 finally:
-    print('closing socket')
-    s.close()
+	print('closing socket')
+	s.close()

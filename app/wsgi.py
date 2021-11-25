@@ -2,5 +2,6 @@ import os
 from routes import proxy_app
 
 if __name__ == '__main__':
-    [host, port] = os.getenv('PROXY_ADDRESS').split(':')
+    host = os.getenv('PROXY_HOST')
+    port = os.getenv('PROXY_PORT')
     proxy_app.run(host=host, port=port)

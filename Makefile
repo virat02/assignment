@@ -14,7 +14,7 @@ rebuild:
 	docker-compose down -v && docker-compose build && docker-compose up -d
 
 run_tcp:
-	docker-compose up -d redis && docker-compose up -d tcp_client
+	docker-compose up -d redis && docker-compose up -d tcp_server
 
 run_http:
 	docker-compose up -d redis && docker-compose up -d web
