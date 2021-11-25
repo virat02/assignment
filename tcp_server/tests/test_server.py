@@ -14,7 +14,7 @@ import pytest
     ]
 )
 def test_get_key(create_socket: socket, key: str, val: str):
-    resp = create_socket.sendall(f'{key}'.encode("utf-8"))
+    create_socket.sendall(f'{key}'.encode("utf-8"))
 
     resp_data = (create_socket.recv(32)).decode("utf-8")
     assert resp_data == val
