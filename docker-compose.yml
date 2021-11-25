@@ -40,6 +40,6 @@ services:
         MAX_CLIENTS: ${MAX_CLIENTS}
         MAX_REQUESTS: ${MAX_REQUESTS}
       ports:
-        - "8081:${PROXY_PORT_TCP}"
+        - "${LOCAL_PORT_TCP}:${PROXY_PORT_TCP}"
       restart: always
       container_name: tcp-server-container

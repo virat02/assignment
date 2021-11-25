@@ -44,10 +44,7 @@ class Proxy:
     def put(self, key, val):
         if self._is_tcp:
             key = self._resp_parser.decode(key)
-            print(f'Decoded key: {key}')
-
             val = self._resp_parser.decode(val)
-            print(f'Decoded val: {val}')
 
         return self._redisClient.put(key, val)
 
