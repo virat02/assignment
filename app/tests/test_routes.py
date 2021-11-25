@@ -1,3 +1,4 @@
+from flask.testing import FlaskClient
 import pytest
 
 @pytest.mark.parametrize(
@@ -8,10 +9,11 @@ import pytest
         ("test2", 200, "test2"),
         ("test3", 200, "test3"),
         ("test4", 200, "test4"),
-        ("test5", 200, "test5 not found!")
+        ("test5", 200, "1"),
+        ("test6", 200, "test6 not found!"),
     ]
 )
-def test_get_key(client, setup_test_data, key, status_code, val):
+def test_get_key(client: FlaskClient, key: str, status_code: int, val: str) -> str:
     resp = client.get(f'/get/{key}')
     assert resp.status_code == status_code
 

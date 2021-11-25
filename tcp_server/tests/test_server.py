@@ -1,3 +1,4 @@
+from socket import socket
 import pytest
 
 @pytest.mark.parametrize(
@@ -8,11 +9,11 @@ import pytest
         ("$4\r\nfoo3\r\n", "bar3"),
         ("$4\r\nfoo4\r\n", "bar4"),
         ("$4\r\nfoo5\r\n", "bar5"),
-        ("$4\r\nfoo6\r\n", "$4\r\nfoo6\r\n not found!"),
+        ("$4\r\nfoo6\r\n", "foo6 not found!"),
         ("$4\r\foo6\r\n", "Invalid key requested")
     ]
 )
-def test_get_key(create_socket, setup_test_data, key, val):
+def test_get_key(create_socket: socket, key: str, val: str):
     resp = create_socket.sendall(f'{key}'.encode("utf-8"))
 
     resp_data = (create_socket.recv(32)).decode("utf-8")

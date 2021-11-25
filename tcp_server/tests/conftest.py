@@ -2,7 +2,8 @@ import socket, sys, os, pytest
 from package.redis.client import RedisClient
 
 @pytest.fixture()
-def create_socket():
+def create_socket() -> socket:
+    """Returns a socket object if connection established successfully with server"""
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except socket.error as err:
@@ -20,7 +21,8 @@ def create_socket():
     return s
 
 @pytest.fixture(scope="session", autouse=True)
-def setup_test_data():
+def setup_test_data() -> None:
+    """Set-up data directly to backing redis"""
     host = os.getenv('BACKING_REDIS_HOST')
     port = os.getenv('BACKING_REDIS_PORT')
     redisClient = RedisClient(host=host, port=port, db=0)
