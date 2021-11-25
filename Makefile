@@ -11,13 +11,46 @@ stop:
 	docker-compose down -v
 
 rebuild:
-	docker-compose down -v && docker-compose build && docker-compose up -d
-
-run_tcp:
-	docker-compose up -d redis && docker-compose up -d tcp_server
-
-run_http:
-	docker-compose up -d redis && docker-compose up -d web
+	make stop && make build && make run
 
 remove_orphans:
 	docker-compose down --remove-orphans
+
+build_redis:
+	docker-compose build redis
+
+run_redis:
+	docker-compose up -d redis
+
+build_http_server:
+	docker-compose build web
+
+run_http_server:
+	docker-compose up -d web
+
+build_tcp_server:
+	docker-compose build tcp_server
+
+run_tcp_server:
+	docker-compose up -d tcp_server
+
+run_tcp:
+	make run_redis && make run_tcp_server
+
+run_http:
+	make run_redis && make run_http_server
+
+test_http:
+	make run_http && docker-compose exec web pytest "tests"
+
+test_tcp:
+	make run_tcp && docker-compose exec web pytest "tests"
+
+stop_redis:
+	docker-compose down -v redis
+
+stop_http: 
+	 make stop_redis && docker-compose down -v web
+
+stop_tcp: 
+	 make stop_redis && docker-compose down -v tcp_server
