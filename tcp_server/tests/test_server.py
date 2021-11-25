@@ -3,14 +3,14 @@ import pytest
 
 @pytest.mark.parametrize(
     "key, val", [
-        ("$3\r\nfoo\r\n", "bar"),
-        ("$4\r\nfoo1\r\n", "bar1"),
-        ("$4\r\nfoo2\r\n", "bar2"),
-        ("$4\r\nfoo3\r\n", "bar3"),
-        ("$4\r\nfoo4\r\n", "bar4"),
-        ("$4\r\nfoo5\r\n", "bar5"),
-        ("$4\r\nfoo6\r\n", "foo6 not found!"),
-        ("$4\r\foo6\r\n", "Invalid key requested")
+        ("*2\r\n$3\r\nget\r\n$3\r\nfoo\r\n", "bar"),
+        ("*2\r\n$3\r\nget\r\n$4\r\nfoo1\r\n", "bar1"),
+        ("*2\r\n$3\r\nget\r\n$4\r\nfoo2\r\n", "bar2"),
+        ("*2\r\n$3\r\nget\r\n$4\r\nfoo3\r\n", "bar3"),
+        ("*2\r\n$3\r\nget\r\n$4\r\nfoo4\r\n", "bar4"),
+        ("*2\r\n$3\r\nget\r\n$4\r\nfoo5\r\n", "bar5"),
+        ("*2\r\n$3\r\nget\r\n$4\r\nfoo6\r\n", "foo6 not found!"),
+        ("*2\r\n$3\r\nget\r\n$4\r\foo6\r\n", "Invalid key requested"),
     ]
 )
 def test_get_key(create_socket: socket, key: str, val: str):

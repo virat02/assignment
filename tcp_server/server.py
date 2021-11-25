@@ -23,7 +23,7 @@ proxy = Proxy(is_tcp=True)
 while True:
     # Establish connection with client.
     c, addr = s.accept()	
-    print(f'Got connection from {addr}')
+    print(f'\nGot connection from {addr}')
 
     request = c.recv(32)
     key = request.decode("utf-8")
