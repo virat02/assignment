@@ -25,7 +25,7 @@ s.connect((host, int(port)))
 print('the socket has successfully connected')
 
 # Send data
-message = b"$4\r\nfoo5\r\n"
+message = b"$4\r\nfoo1\r\n"
 
 print(f'sending: {message}')
 s.sendall(message)

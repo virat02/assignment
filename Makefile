@@ -41,16 +41,19 @@ run_http:
 	make run_redis && make run_http_server
 
 test_http:
-	make run_http && docker-compose exec web pytest "tests"
+	docker-compose exec web pytest "tests"
 
 test_tcp:
-	make run_tcp && docker-compose exec tcp_server pytest "tests"
+	docker-compose exec tcp_server pytest "tests"
 
 stop_redis:
 	docker-compose down -v redis
 
 stop_http: 
-	 make stop_redis && docker-compose down -v web
+	make stop_redis && docker-compose down -v web
 
 stop_tcp: 
-	 make stop_redis && docker-compose down -v tcp_server
+	make stop_redis && docker-compose down -v tcp_server
+
+test:
+	make build && make run && make test_http && make test_tcp
