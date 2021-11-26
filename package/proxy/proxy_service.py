@@ -5,7 +5,7 @@ from package.proxy.resp_parser import RespParser
 
 class Proxy:
 
-    def __init__(self, is_tcp: bool = False, debug: bool = False) -> None:
+    def __init__(self, is_tcp: bool = False, debug: bool = False, cache_capacity: int = 5, cache_expiry: int = 60000) -> None:
         self._debug = debug
 
         # Initialize RedisClient
@@ -18,7 +18,11 @@ class Proxy:
         self._redisClient = RedisClient(host=host, port=port, db=0)
 
         # Initialize LRU Cache
-        self._cache = LRUCache(os.getenv('CACHE_CAPACITY'), os.getenv('CACHE_GLOBAL_EXPIRY'), self._debug)
+        # NOTE: Priority given to cache environment variables
+        self._cache_capacity = os.getenv('CACHE_CAPACITY') or cache_capacity
+        self._cache_expiry = os.getenv('CACHE_GLOBAL_EXPIRY') or cache_expiry
+
+        self._cache = LRUCache(self._cache_capacity, self._cache_expiry, self._debug)
         self._is_tcp = is_tcp
 
         if self._is_tcp:

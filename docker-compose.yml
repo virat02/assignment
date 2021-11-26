@@ -1,30 +1,42 @@
 version: '3.8'
 services:
-    redis:
+    redis-http:
       image: redis:latest
-      container_name: redis-container
+      build: 
+        context: .
+        dockerfile: dockerfile_redis_http
+      environment:
+        BACKING_REDIS_HOST: ${BACKING_REDIS_HOST_HTTP}
+        BACKING_REDIS_PORT: ${BACKING_REDIS_PORT_HTTP}
+      container_name: redis-http-container
 
-    redis2:
+    redis-tcp:
       image: redis:latest
-      container_name: redis2-container
+      build: 
+        context: .
+        dockerfile: dockerfile_redis_tcp
+      environment:
+        BACKING_REDIS_HOST: ${BACKING_REDIS_HOST_TCP}
+        BACKING_REDIS_PORT: ${BACKING_REDIS_PORT_TCP}
+      container_name: redis-tcp-container
 
     web:
       build:
         context: .
         dockerfile: dockerfile_web
       environment: 
-        PROXY_HOST: ${PROXY_HOST}
-        PROXY_PORT: ${PROXY_PORT}
+        PROXY_HOST: ${PROXY_HOST_HTTP}
+        PROXY_PORT: ${PROXY_PORT_HTTP}
         FLASK_DEBUG: 1
         PYTHONUNBUFFERED: 1
         CACHE_GLOBAL_EXPIRY: ${CACHE_GLOBAL_EXPIRY}
         CACHE_CAPACITY: ${CACHE_CAPACITY}
         BACKING_REDIS_HOST: ${BACKING_REDIS_HOST_HTTP}
-        BACKING_REDIS_PORT: ${BACKING_REDIS_PORT}
+        BACKING_REDIS_PORT: ${BACKING_REDIS_PORT_HTTP}
         MAX_CLIENTS: ${MAX_CLIENTS}
         MAX_REQUESTS: ${MAX_REQUESTS}
       ports:
-        - "8080:${PROXY_PORT}"
+        - "${LOCAL_PORT_HTTP}:${PROXY_PORT_HTTP}"
       restart: always
       container_name: flask-container
     
@@ -40,7 +52,7 @@ services:
         CACHE_GLOBAL_EXPIRY: ${CACHE_GLOBAL_EXPIRY}
         CACHE_CAPACITY: ${CACHE_CAPACITY}
         BACKING_REDIS_HOST: ${BACKING_REDIS_HOST_TCP}
-        BACKING_REDIS_PORT: ${BACKING_REDIS_PORT}
+        BACKING_REDIS_PORT: ${BACKING_REDIS_PORT_TCP}
         MAX_CLIENTS: ${MAX_CLIENTS}
         MAX_REQUESTS: ${MAX_REQUESTS}
       ports:

@@ -1,0 +1,14 @@
+FROM redis:latest
+
+# Environment variables
+ENV BACKING_REDIS_HOST ${BACKING_REDIS_HOST}
+ENV BACKING_REDIS_PORT ${BACKING_REDIS_PORT}
+
+WORKDIR /usr/local/etc/redis
+COPY redis.conf /usr/local/etc/redis/redis.conf
+
+EXPOSE ${BACKING_REDIS_PORT}
+
+COPY docker-entrypoint-http.sh /usr/local/etc/redis
+RUN chmod +x docker-entrypoint-http.sh
+ENTRYPOINT ["/usr/local/etc/redis/docker-entrypoint-http.sh"]

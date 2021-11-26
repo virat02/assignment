@@ -2,18 +2,21 @@ FROM python:latest
 
 # Environment variables
 
-ENV PROXY_HOST ${PROXY_HOST}
-ENV PROXY_PORT ${PROXY_PORT}
+ENV PROXY_HOST ${PROXY_HOST_HTTP}
+ENV PROXY_PORT ${PROXY_PORT_HTTP}
 ENV MAX_CLIENTS ${MAX_CLIENTS}
 ENV MAX_REQUESTS ${MAX_REQUESTS}
 
-WORKDIR /usr/assignment/app/
+WORKDIR /usr/assignment/app
 
 COPY ./app/requirements.txt /usr/assignment/app/requirements.txt
 RUN pip3 install -r requirements.txt
 
 ADD ./app /usr/assignment/app
 ADD ./package /usr/assignment/app/package
+
+ADD ./package/cache/tests /usr/assignment/app/tests/test_cache
+ADD ./app/tests /usr/assignment/app/tests/test_routes
 
 EXPOSE ${PROXY_PORT}
 
