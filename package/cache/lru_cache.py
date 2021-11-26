@@ -64,4 +64,7 @@ class LRUCache:
         """Returns true if time now is greater than the cache expiry time set else false"""
         time_now = int(time.time() * 1000)
         
+        if self._debug:
+            print(f'time_now: {time_now}.')
+            print(f'expiry_time: {expiry_time}.')
         return time_now > expiry_time
