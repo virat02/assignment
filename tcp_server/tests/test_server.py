@@ -11,6 +11,7 @@ import pytest
         ("*2\r\n$3\r\nget\r\n$4\r\nfoo5\r\n", "bar5"),
         ("*2\r\n$3\r\nget\r\n$4\r\nfoo6\r\n", "foo6 not found!"),
         ("*2\r\n$3\r\nget\r\n$4\r\foo6\r\n", "Invalid key requested"),
+        ("*3\r\n$3\r\nset\r\n$4\r\nfoo7\r\n$4\r\nbar7\r\n", "Not a GET request"),
     ]
 )
 def test_get_key(create_socket: socket, key: str, val: str):

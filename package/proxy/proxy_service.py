@@ -38,6 +38,8 @@ class Proxy:
 
             if key == 'Invalid':
                 return 'Invalid key requested'
+            elif key[0].lower() != 'get':
+                return 'Not a GET request'
 
             key = key[1]
         
