@@ -43,7 +43,7 @@ class LRUCache:
 
     def put(self, key: str, value: str) -> None:
         """
-        1. Add key-val to the cache
+        1. Add key: (value, expiry_time) to the cache
         2. Mark the key as most recently used.
         3. If cache is over-capacity, remove the least recently used key.
         """
@@ -61,7 +61,7 @@ class LRUCache:
     
 
     def isExpired(self, expiry_time: int) -> bool:
-        """Returns true if time now is greater than the cache expiry time set else false"""
+        """Returns True if time now is greater than the cache expiry time set else returns False"""
         time_now = int(time.time() * 1000)
         
         if self._debug:

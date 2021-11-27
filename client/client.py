@@ -12,7 +12,7 @@ except socket.error as err:
 	print("socket creation failed with error %s" %(err))
 
 try:
-	host = "localhost"
+	host = os.getenv('PROXY_HOST_TCP')
 	port = os.getenv('LOCAL_PORT_TCP')
 except socket.gaierror:
 	print("there was an error resolving the host")
