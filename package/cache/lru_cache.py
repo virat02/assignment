@@ -1,9 +1,9 @@
-import time, sys
+import time
 from collections import OrderedDict
 from typing import Union
 class LRUCache:
 
-    def __init__(self, capacity: int = 5, expiry: int = sys.maxsize, debug: bool = False) -> None:
+    def __init__(self, capacity: int = 5, expiry: int = 300000, debug: bool = False) -> None:
         self._debug = debug
 
         # Stores keys in the order of least recently used to most recently used.
@@ -13,7 +13,6 @@ class LRUCache:
         self._capacity = capacity
 
         # Set cache global expiry (milliseconds)
-        # NOTE: If expiry is max int, cache would never expire.
         self._expiry = expiry
  
 

@@ -135,7 +135,7 @@ The [cache](#cache) is implemented as an LRU cache.
 
 - `lru_cache.py`
 
-    - `__init__(self, capacity: int = 5, expiry: int = sys.maxsize, debug: bool = False) -> None`
+    - `__init__(self, capacity: int = 5, expiry: int = 300000, debug: bool = False) -> None`
         - Instantiates a LRUCache object.
         - `capacity` is defaulted to `5`. 
         - `expiry` is defaulted to `300000` milliseconds.
