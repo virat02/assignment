@@ -3,7 +3,7 @@ from collections import OrderedDict
 from typing import Union
 class LRUCache:
 
-    def __init__(self, capacity: int = sys.maxsize, expiry: int = 300000, debug: bool = False) -> None:
+    def __init__(self, capacity: int = 5, expiry: int = sys.maxsize, debug: bool = False) -> None:
         self._debug = debug
 
         # Stores keys in the order of least recently used to most recently used.
