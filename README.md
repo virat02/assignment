@@ -45,8 +45,8 @@ stores it in the local cache, associated with the specified key.
 
 **Components:**
 
-# cache
-**1. cache**
+
+**1. #cache**
 
 The cache is implemented as an LRU cache. `CACHE_GLOBAL_EXPIRY` and `CACHE_CAPACITY` can be configured at proxy startup.
 Any different cache implementation can be switched easily. 
