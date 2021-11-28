@@ -68,7 +68,7 @@ The HTTP server handling `GET` requests.
 - A `GET` request to the endpoint `/get/{key}` first attempts to fetch a value from the cache, if unavailable, fetches the value from backing redis. 
 - If value is not available in the backing redis either, displays `{key} not found!`. 
 
-Flask app served through Gunicorn helps achieve parallel concurrent access, values for MAX_CLIENTS and MAX_REQUESTS configurable from `.env` 
+Flask app served through Gunicorn helps achieve parallel concurrent access, values for MAX_CLIENTS and MAX_REQUESTS configurable from [`.env`](#environment-variables) 
 
 ### TCP server
 
@@ -161,7 +161,7 @@ The [redis client](#redis) handles talking to the backing redis instance
 ***`proxy/proxy_service.py`***
 
 Instantiates a proxy object for communicating with the [cache](#cache) and [redis](#redis).
-Cache and backing redis is instantiated based on the configurable cache values in [`.env`](#environment-variales)
+Cache and backing redis is instantiated based on the configurable cache values in [`.env`](#environment-variables)
 
 - `__init__(self, is_tcp: bool = False, debug: bool = False, cache_capacity: int = 5, cache_expiry: int = 60000) -> None`
 
@@ -181,7 +181,7 @@ Cache and backing redis is instantiated based on the configurable cache values i
 
 ***`wsgi.py`*** 
 
-Runs the flask app on `PROXY_HOST` and `PROXY_PORT` configured via [`.env`](#environment-variales) file.
+Runs the flask app on `PROXY_HOST` and `PROXY_PORT` configured via [`.env`](#environment-variables) file.
 
 ***`routes.py`***
 
@@ -193,7 +193,7 @@ Provides two end-points for a HTTP client:
 
 ***`server.py`***
 
-Listens to and accepts connections from clients connecting on `PROXY_HOST` and `PROXY_PORT` configured via [`.env`](#environment-variales) file.
+Listens to and accepts connections from clients connecting on `PROXY_HOST` and `PROXY_PORT` configured via [`.env`](#environment-variables) file.
 
 ***`resp_parser.py`***
 
