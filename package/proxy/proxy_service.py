@@ -33,7 +33,7 @@ class Proxy:
         1. Returns value for key from cache if key exists in cache.
         2. Returns value for key from backing redis if key does not exist in cache
         3. Returns "{key} not found" if the key is not found neither in cache or backing redis.
-        NOTE: For a TCP proxy, resp parser will parse the requested key before further implementation.
+        NOTE: For a TCP proxy, resp parser will encode and decode in RESP format.
         """
         if self._is_tcp:
             key = self._resp_parser.decode(key)
@@ -41,10 +41,11 @@ class Proxy:
                 print(f'Decoded key: {key}')
 
             if key == 'Invalid':
-                return 'Invalid key requested'
+                return self._resp_parser.encodeError('Invalid key requested') 
             elif key[0].lower() != 'get':
-                return 'Not a GET request'
+                return self._resp_parser.encodeError('Not a GET request') 
 
+            # Fetch the 'key' from the RESP GET request
             key = key[1]
         
         # Try fetching value for key from cache
@@ -55,7 +56,7 @@ class Proxy:
             if self._debug:
                 print('got from cache')
 
-            return val
+            return val if not self._is_tcp else self._resp_parser.encodeString(val)
         else:
             # Try fetching value for key from backing redis
             val = self._redisClient.getVal(key)
@@ -73,5 +74,11 @@ class Proxy:
             if self._debug:
                 print(f'got from redis {val}')
 
-            return val if val != -1 else f'{key} not found!'
+            if not self._is_tcp:
+                return val if val != -1 else f'{key} not found!'
+            else:
+                if val == -1:
+                    return self._resp_parser.encodeError(f'{key} not found!')
+                else:
+                    return self._resp_parser.encodeString(val)
 

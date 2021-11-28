@@ -5,6 +5,16 @@ DELIMITER = "\r\n"
 
 class RespParser:
 
+    def encodeString(self, data: str) -> str:
+        """Encode 'data' into a Redis RESP string"""
+        result = ['+', data, DELIMITER]
+        return "".join(result)
+    
+    def encodeError(self, data: str) -> str:
+        """Encode 'data' into a Redis RESP error"""
+        result = ['-', data, DELIMITER]
+        return "".join(result)
+
     def decode(self, data: str) -> str:
         """Returns a decoded RESP command or 'Invalid' if command is invalid"""
         processed, index = 0, data.find(DELIMITER)
