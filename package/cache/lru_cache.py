@@ -1,19 +1,20 @@
-import time
+import time, sys
 from collections import OrderedDict
 from typing import Union
 class LRUCache:
 
-    def __init__(self, capacity: int = 5, expiry: int = 300000, debug=False) -> None:
+    def __init__(self, capacity: int = sys.maxsize, expiry: int = 300000, debug: bool = False) -> None:
         self._debug = debug
 
         # Stores keys in the order of least recently used to most recently used.
-        self.cache = OrderedDict()
+        self._cache = OrderedDict()
 
         # Set cache fixed key size
-        self.capacity = int(capacity)
+        self._capacity = capacity
 
         # Set cache global expiry (milliseconds)
-        self.expiry = int(expiry)
+        # NOTE: If expiry is max int, cache would never expire.
+        self._expiry = expiry
  
 
     def get(self, key: str) -> Union[int, str]:
@@ -22,22 +23,22 @@ class LRUCache:
         2. Return -1 if requested key has expired (Treat it as key not found)
         3. Return value if key found and also mark it as most recently used.
         """
-        if key not in self.cache:
+        if key not in self._cache:
             return -1
         else:
-            (val, expiry_time) = self.cache[key]
+            (val, expiry_time) = self._cache[key]
 
             # If key has expired
-            if(self.isExpired(expiry_time)):
+            if self.isExpired(expiry_time):
                 if self._debug:
                     print(f'{key} expired, removing from cache.')
 
                 # Remove from local cache
-                self.cache.pop(key, -1)
+                self._cache.pop(key, -1)
 
                 return -1
 
-            self.cache.move_to_end(key)
+            self._cache.move_to_end(key)
             return val
  
 
@@ -48,13 +49,13 @@ class LRUCache:
         3. If cache is over-capacity, remove the least recently used key.
         """
         time_now = int(time.time() * 1000)
-        self.cache[key] = (value, time_now + self.expiry)
+        self._cache[key] = (value, time_now + self._expiry)
 
-        self.cache.move_to_end(key)
+        self._cache.move_to_end(key)
 
-        if len(self.cache) > self.capacity:
+        if len(self._cache) > self._capacity:
             # Pop in FIFO order since LRU key is at the top
-            val = self.cache.popitem(last = False)
+            val = self._cache.popitem(last = False)
 
             if self._debug:
                 print(f'over-capacity, removing {val} from cache.')
