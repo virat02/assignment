@@ -271,11 +271,3 @@ make run
 # stop container
 make stop
 ```
-
-# Time spent in implementation
-
-1. `Cache`: ~1 hour
-2. `HTTP Proxy service`: ~20 hours (Includes time to setup docker for HTTP Proxy)
-3. `TCP Proxy service`: ~20 hours (Includes time to setup docker for TCP Proxy)
-4. `Understanding Redis and RESP` : ~3 hours.
-5. `Tests` : ~3 hours
